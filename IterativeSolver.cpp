@@ -2,7 +2,7 @@
 
 void IterativeSolver::solve() {
     // Calculamos el número total de movimientos
-    int totalMovimientos = (1 << numDisks) - 1; // 2^n - 1
+    int totalMoves = (1 << numDisks) - 1; // 2^n - 1
     
     // Creamos tres pilas para representar las tres torres
     std::stack<int> towerOrigin, towerDestination, towerAuxiliary;
@@ -34,7 +34,7 @@ void IterativeSolver::solve() {
         names[2] = auxiliary;
     }
     
-    for (int i = 1; i <= totalMovimientos; i++) {
+    for (int i = 1; i <= totalMoves; i++) {
         if (i % 3 == 1) {
             // Mover entre torre 0 y torre 1
             moveDisk(towers[0], towers[1], names[0], names[1]);

@@ -47,6 +47,8 @@ int main() {
     
     // Dependency Inversion: Using pointer to base class (abstraction)
     // Factory pattern: Creating appropriate solver based on user choice
+    // Note: Using reset() with new instead of make_unique for C++11 compatibility
+    // (make_unique was introduced in C++14)
     unique_ptr<HanoiSolver> solver;
     
     if (option == 1) {
