@@ -22,11 +22,9 @@ Este proyecto implementa el clásico problema de las Torres de Hanoi en C++ usan
 ├── IterativeSolver.h      # Declaración del solver iterativo
 ├── IterativeSolver.cpp    # Implementación del solver iterativo
 ├── main.cpp               # Punto de entrada de la aplicación
-├── Makefile               # Sistema de compilación
-└── hanoi.cpp              # [Legacy] Implementación monolítica original
+├── test_hanoi.cpp         # Suite de pruebas de robustez
+└── Makefile               # Sistema de compilación
 ```
-
-> **Nota**: El archivo `hanoi.cpp` contiene la implementación original antes de la refactorización OOP. Se mantiene como referencia pero ya no se usa en la compilación. La nueva implementación modular está en los archivos separados listados arriba.
 
 ### Principios SOLID Aplicados
 
@@ -66,11 +64,21 @@ Las Torres de Hanoi es un rompecabezas matemático que consiste en tres torres y
 
 El proyecto incluye un Makefile para facilitar la compilación:
 
+### Compilar el programa principal
+
 ```bash
 make
 ```
 
 Esto compilará todos los archivos fuente y generará el ejecutable `hanoi`.
+
+### Compilar y ejecutar las pruebas
+
+```bash
+make test
+```
+
+Esto compilará y ejecutará la suite de pruebas que valida la robustez del código.
 
 O compilar manualmente todos los archivos:
 
@@ -159,6 +167,45 @@ El número mínimo de movimientos para resolver el problema con n discos es **2^
 3. **Testabilidad**: Cada solver puede ser testeado independientemente
 4. **Reutilización**: La clase base puede ser extendida para otros problemas similares
 5. **Claridad**: Separación clara de responsabilidades y preocupaciones
+
+## Pruebas
+
+El proyecto incluye una suite completa de pruebas (`test_hanoi.cpp`) que valida la robustez del código:
+
+### Ejecutar las pruebas
+
+```bash
+make test
+```
+
+### Categorías de pruebas
+
+- **Edge Cases**: Prueba con 1 disco
+- **Números pequeños**: Prueba con 2-5 discos
+- **Números grandes**: Prueba con 6-10 discos
+- **Consistencia**: Verifica que ambos solvers produzcan los mismos resultados
+- **Configuraciones de torres**: Prueba diferentes combinaciones de torres (A→B, B→C, C→A)
+- **Funcionalidad de reset**: Verifica que el contador de movimientos se reinicie correctamente
+- **Nombres de solvers**: Verifica que los nombres se obtengan correctamente
+- **Stress test**: Prueba con 15 discos (32,767 movimientos)
+
+### Ejemplo de salida de pruebas
+
+```
+==================================================
+    TESTS DE ROBUSTEZ - TORRES DE HANOI          
+==================================================
+
+=== Test: Un solo disco ===
+Test Recursivo con 1 disco(s): OK (Movimientos: 1/1)
+Test Iterativo con 1 disco(s): OK (Movimientos: 1/1)
+
+...
+
+==================================================
+    TODOS LOS TESTS PASARON EXITOSAMENTE!        
+==================================================
+```
 
 ## Limpieza
 
