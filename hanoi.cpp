@@ -1,16 +1,7 @@
 #include <iostream>
 #include <stack>
-#include <vector>
-#include <string>
 
 using namespace std;
-
-// Estructura para representar un movimiento en la solución iterativa
-struct Move {
-    int disk;
-    char from;
-    char to;
-};
 
 // Declaración anticipada de la función auxiliar
 void moverDisco(stack<int>* torre1, stack<int>* torre2, char nombre1, char nombre2, int& movimientos);
@@ -139,7 +130,7 @@ int main() {
     cout << "Ingrese el número de discos: ";
     cin >> n;
     
-    if (n <= 0) {
+    if (cin.fail() || n <= 0) {
         cout << "Error: El número de discos debe ser mayor que 0." << endl;
         return 1;
     }
@@ -150,6 +141,12 @@ int main() {
     cout << "2. Iterativo" << endl;
     cout << "Opción: ";
     cin >> opcion;
+    
+    if (cin.fail() || opcion < 1 || opcion > 2) {
+        cout << "Error: Opción inválida. Debe ser 1 o 2." << endl;
+        return 1;
+    }
+    
     cout << endl;
     
     char origen = 'A', destino = 'C', auxiliar = 'B';
@@ -162,7 +159,7 @@ int main() {
         hanoiRecursivo(n, origen, destino, auxiliar, movimientos);
         cout << endl;
         cout << "Total de movimientos: " << movimientos << endl;
-    } else if (opcion == 2) {
+    } else {
         cout << "=== SOLUCIÓN ITERATIVA ===" << endl;
         cout << "Moviendo " << n << " disco(s) de torre " << origen << " a torre " << destino << endl;
         cout << endl;
@@ -170,9 +167,6 @@ int main() {
         int totalMovimientos = (1 << n) - 1;
         cout << endl;
         cout << "Total de movimientos: " << totalMovimientos << endl;
-    } else {
-        cout << "Opción inválida." << endl;
-        return 1;
     }
     
     return 0;
