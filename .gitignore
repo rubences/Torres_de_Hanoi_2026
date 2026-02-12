@@ -11,3 +11,6 @@ hanoi
 *.tmp
 *~
 .*.swp
+
+# CodeQL
+_codeql_detected_source_root
