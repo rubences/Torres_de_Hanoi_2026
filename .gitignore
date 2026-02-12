@@ -1,5 +1,6 @@
 # Compiled binaries
 hanoi
+test_hanoi
 *.exe
 *.out
 
