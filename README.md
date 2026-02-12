@@ -1,12 +1,55 @@
 # Torres_de_Hanoi_2026
 
-Torres de Hanoi en C++ Recursivo e Iterativo
+Torres de Hanoi en C++ con Arquitectura OOP y Principios SOLID
 
 ## Descripción
 
-Este proyecto implementa el clásico problema de las Torres de Hanoi en C++, ofreciendo dos soluciones diferentes:
+Este proyecto implementa el clásico problema de las Torres de Hanoi en C++ usando una arquitectura orientada a objetos que sigue los principios SOLID. El código está modularizado en componentes independientes:
+
 - **Solución Recursiva**: Implementación elegante usando recursividad
 - **Solución Iterativa**: Implementación usando pilas (stacks) y un algoritmo iterativo
+- **Arquitectura OOP**: Clase base abstracta con implementaciones concretas
+- **Principios SOLID**: Código mantenible, extensible y testeable
+
+## Arquitectura del Proyecto
+
+### Estructura de Archivos
+
+```
+├── HanoiSolver.h          # Clase base abstracta (Interfaz)
+├── RecursiveSolver.h      # Declaración del solver recursivo
+├── RecursiveSolver.cpp    # Implementación del solver recursivo
+├── IterativeSolver.h      # Declaración del solver iterativo
+├── IterativeSolver.cpp    # Implementación del solver iterativo
+├── main.cpp               # Punto de entrada de la aplicación
+├── Makefile               # Sistema de compilación
+└── hanoi.cpp              # [Legacy] Implementación monolítica original
+```
+
+> **Nota**: El archivo `hanoi.cpp` contiene la implementación original antes de la refactorización OOP. Se mantiene como referencia pero ya no se usa en la compilación. La nueva implementación modular está en los archivos separados listados arriba.
+
+### Principios SOLID Aplicados
+
+1. **Single Responsibility Principle (SRP)**: Cada clase tiene una única responsabilidad
+   - `RecursiveSolver`: Solo maneja la solución recursiva
+   - `IterativeSolver`: Solo maneja la solución iterativa
+   - `main.cpp`: Solo maneja la entrada/salida y coordinación
+
+2. **Open/Closed Principle (OCP)**: Las clases están abiertas a extensión pero cerradas a modificación
+   - Se pueden añadir nuevos tipos de solvers sin modificar el código existente
+   - Solo se necesita heredar de `HanoiSolver` y implementar `solve()`
+
+3. **Liskov Substitution Principle (LSP)**: Las clases derivadas pueden sustituir a la base
+   - `RecursiveSolver` y `IterativeSolver` son intercambiables
+   - Ambos cumplen el contrato definido por `HanoiSolver`
+
+4. **Interface Segregation Principle (ISP)**: Interfaces específicas y cohesivas
+   - `HanoiSolver` define solo los métodos necesarios para resolver el problema
+   - No hay métodos innecesarios que las clases derivadas deban implementar
+
+5. **Dependency Inversion Principle (DIP)**: Depender de abstracciones, no de implementaciones
+   - `main.cpp` depende de `HanoiSolver` (abstracción), no de las clases concretas
+   - Se usa polimorfismo para trabajar con diferentes implementaciones
 
 ## El Problema de las Torres de Hanoi
 
@@ -27,10 +70,15 @@ El proyecto incluye un Makefile para facilitar la compilación:
 make
 ```
 
-O compilar manualmente:
+Esto compilará todos los archivos fuente y generará el ejecutable `hanoi`.
+
+O compilar manualmente todos los archivos:
 
 ```bash
-g++ -std=c++11 -Wall -Wextra -O2 -o hanoi hanoi.cpp
+g++ -std=c++11 -Wall -Wextra -O2 -c main.cpp -o main.o
+g++ -std=c++11 -Wall -Wextra -O2 -c RecursiveSolver.cpp -o RecursiveSolver.o
+g++ -std=c++11 -Wall -Wextra -O2 -c IterativeSolver.cpp -o IterativeSolver.o
+g++ -std=c++11 -Wall -Wextra -O2 -o hanoi main.o RecursiveSolver.o IterativeSolver.o
 ```
 
 ## Uso
@@ -59,7 +107,7 @@ Seleccione el método de solución:
 2. Iterativo
 Opción: 1
 
-=== SOLUCIÓN RECURSIVA ===
+=== SOLUCIÓN Recursivo ===
 Moviendo 3 disco(s) de torre A a torre C
 
 Movimiento 1: Mover disco 1 de A a C
@@ -89,9 +137,28 @@ El número mínimo de movimientos para resolver el problema con n discos es **2^
 ## Características Técnicas
 
 - **Lenguaje:** C++11
-- **Estructuras de datos:** Stack (para solución iterativa)
-- **Paradigmas:** Recursividad y programación iterativa
+- **Paradigma:** Programación Orientada a Objetos (OOP)
+- **Principios de Diseño:** SOLID
+- **Patrones de Diseño:** 
+  - Strategy Pattern (diferentes algoritmos de solución)
+  - Factory Pattern (creación de solvers basada en opción del usuario)
+  - Template Method Pattern (estructura común en clase base)
+- **Estructuras de datos:** 
+  - Stack (para solución iterativa)
+  - Punteros inteligentes (unique_ptr para gestión automática de memoria)
+- **Características OOP:**
+  - Herencia y polimorfismo
+  - Clases abstractas e interfaces
+  - Encapsulación de datos y comportamiento
 - **Entrada/Salida:** Consola interactiva
+
+## Ventajas de la Arquitectura OOP
+
+1. **Extensibilidad**: Fácil añadir nuevos tipos de solvers (ej: solver con visualización gráfica)
+2. **Mantenibilidad**: Cambios en un solver no afectan a otros
+3. **Testabilidad**: Cada solver puede ser testeado independientemente
+4. **Reutilización**: La clase base puede ser extendida para otros problemas similares
+5. **Claridad**: Separación clara de responsabilidades y preocupaciones
 
 ## Limpieza
 
