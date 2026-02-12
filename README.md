@@ -1,12 +1,52 @@
 # Torres_de_Hanoi_2026
 
-Torres de Hanoi en C++ Recursivo e Iterativo
+Torres de Hanoi en C++ con Arquitectura OOP y Principios SOLID
 
 ## Descripción
 
-Este proyecto implementa el clásico problema de las Torres de Hanoi en C++, ofreciendo dos soluciones diferentes:
+Este proyecto implementa el clásico problema de las Torres de Hanoi en C++ usando una arquitectura orientada a objetos que sigue los principios SOLID. El código está modularizado en componentes independientes:
+
 - **Solución Recursiva**: Implementación elegante usando recursividad
 - **Solución Iterativa**: Implementación usando pilas (stacks) y un algoritmo iterativo
+- **Arquitectura OOP**: Clase base abstracta con implementaciones concretas
+- **Principios SOLID**: Código mantenible, extensible y testeable
+
+## Arquitectura del Proyecto
+
+### Estructura de Archivos
+
+```
+├── HanoiSolver.h          # Clase base abstracta (Interfaz)
+├── RecursiveSolver.h      # Declaración del solver recursivo
+├── RecursiveSolver.cpp    # Implementación del solver recursivo
+├── IterativeSolver.h      # Declaración del solver iterativo
+├── IterativeSolver.cpp    # Implementación del solver iterativo
+├── main.cpp               # Punto de entrada de la aplicación
+└── Makefile               # Sistema de compilación
+```
+
+### Principios SOLID Aplicados
+
+1. **Single Responsibility Principle (SRP)**: Cada clase tiene una única responsabilidad
+   - `RecursiveSolver`: Solo maneja la solución recursiva
+   - `IterativeSolver`: Solo maneja la solución iterativa
+   - `main.cpp`: Solo maneja la entrada/salida y coordinación
+
+2. **Open/Closed Principle (OCP)**: Las clases están abiertas a extensión pero cerradas a modificación
+   - Se pueden añadir nuevos tipos de solvers sin modificar el código existente
+   - Solo se necesita heredar de `HanoiSolver` y implementar `solve()`
+
+3. **Liskov Substitution Principle (LSP)**: Las clases derivadas pueden sustituir a la base
+   - `RecursiveSolver` y `IterativeSolver` son intercambiables
+   - Ambos cumplen el contrato definido por `HanoiSolver`
+
+4. **Interface Segregation Principle (ISP)**: Interfaces específicas y cohesivas
+   - `HanoiSolver` define solo los métodos necesarios para resolver el problema
+   - No hay métodos innecesarios que las clases derivadas deban implementar
+
+5. **Dependency Inversion Principle (DIP)**: Depender de abstracciones, no de implementaciones
+   - `main.cpp` depende de `HanoiSolver` (abstracción), no de las clases concretas
+   - Se usa polimorfismo para trabajar con diferentes implementaciones
 
 ## El Problema de las Torres de Hanoi
 
