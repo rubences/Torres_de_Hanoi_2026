@@ -22,8 +22,11 @@ Este proyecto implementa el clásico problema de las Torres de Hanoi en C++ usan
 ├── IterativeSolver.h      # Declaración del solver iterativo
 ├── IterativeSolver.cpp    # Implementación del solver iterativo
 ├── main.cpp               # Punto de entrada de la aplicación
-└── Makefile               # Sistema de compilación
+├── Makefile               # Sistema de compilación
+└── hanoi.cpp              # [Legacy] Implementación monolítica original
 ```
+
+> **Nota**: El archivo `hanoi.cpp` contiene la implementación original antes de la refactorización OOP. Se mantiene como referencia pero ya no se usa en la compilación. La nueva implementación modular está en los archivos separados listados arriba.
 
 ### Principios SOLID Aplicados
 
@@ -67,10 +70,15 @@ El proyecto incluye un Makefile para facilitar la compilación:
 make
 ```
 
-O compilar manualmente:
+Esto compilará todos los archivos fuente y generará el ejecutable `hanoi`.
+
+O compilar manualmente todos los archivos:
 
 ```bash
-g++ -std=c++11 -Wall -Wextra -O2 -o hanoi hanoi.cpp
+g++ -std=c++11 -Wall -Wextra -O2 -c main.cpp -o main.o
+g++ -std=c++11 -Wall -Wextra -O2 -c RecursiveSolver.cpp -o RecursiveSolver.o
+g++ -std=c++11 -Wall -Wextra -O2 -c IterativeSolver.cpp -o IterativeSolver.o
+g++ -std=c++11 -Wall -Wextra -O2 -o hanoi main.o RecursiveSolver.o IterativeSolver.o
 ```
 
 ## Uso
@@ -99,7 +107,7 @@ Seleccione el método de solución:
 2. Iterativo
 Opción: 1
 
-=== SOLUCIÓN RECURSIVA ===
+=== SOLUCIÓN Recursivo ===
 Moviendo 3 disco(s) de torre A a torre C
 
 Movimiento 1: Mover disco 1 de A a C
@@ -129,9 +137,28 @@ El número mínimo de movimientos para resolver el problema con n discos es **2^
 ## Características Técnicas
 
 - **Lenguaje:** C++11
-- **Estructuras de datos:** Stack (para solución iterativa)
-- **Paradigmas:** Recursividad y programación iterativa
+- **Paradigma:** Programación Orientada a Objetos (OOP)
+- **Principios de Diseño:** SOLID
+- **Patrones de Diseño:** 
+  - Strategy Pattern (diferentes algoritmos de solución)
+  - Factory Pattern (creación de solvers basada en opción del usuario)
+  - Template Method Pattern (estructura común en clase base)
+- **Estructuras de datos:** 
+  - Stack (para solución iterativa)
+  - Punteros inteligentes (unique_ptr para gestión automática de memoria)
+- **Características OOP:**
+  - Herencia y polimorfismo
+  - Clases abstractas e interfaces
+  - Encapsulación de datos y comportamiento
 - **Entrada/Salida:** Consola interactiva
+
+## Ventajas de la Arquitectura OOP
+
+1. **Extensibilidad**: Fácil añadir nuevos tipos de solvers (ej: solver con visualización gráfica)
+2. **Mantenibilidad**: Cambios en un solver no afectan a otros
+3. **Testabilidad**: Cada solver puede ser testeado independientemente
+4. **Reutilización**: La clase base puede ser extendida para otros problemas similares
+5. **Claridad**: Separación clara de responsabilidades y preocupaciones
 
 ## Limpieza
 
